@@ -142,7 +142,6 @@ public class BoardDAO {
 		return bean;
 	}
 	
-	
 	public void reWriteBoard(BoardBean bean) {
 		
 		//부모글 그룹과 글레벨 글스탭 읽어옴
@@ -191,14 +190,94 @@ public class BoardDAO {
 		
 		try {
 			
-			String sql = "update board set content = ? where no = ?";
+			String sql = "update board set subject=? , content = ? where no = ?";
 			pstmt= con.prepareStatement(sql);
-			pstmt.setString(1, bean.getContent());
-			pstmt.setInt(2, bean.getNo());
+			pstmt.setString(1, bean.getSubject());
+			pstmt.setString(2, bean.getContent());
+			pstmt.setInt(3, bean.getNo());
 			
 			pstmt.executeUpdate();
 			
 			con.close();
+			
+		} catch (Exception e) {e.printStackTrace();}
+	}
+	
+	public BoardBean getOneUpdateBoard(int no) {
+		
+		BoardBean bean = new BoardBean();
+		
+		getCon();
+		
+		try {
+			
+			String sql = "select * from board where no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				bean.setNo(rs.getInt(1));			
+				bean.setWriter(rs.getString(2));
+				bean.setEmail(rs.getString(3));
+				bean.setSubject(rs.getString(4));
+				bean.setPassword(rs.getString(5));
+				bean.setDate(rs.getString(6));
+				bean.setRef(rs.getInt(7));
+				bean.setRe_step(rs.getInt(8));
+				bean.setRe_level(rs.getInt(9));
+				bean.setReadcount(rs.getInt(10));
+				bean.setContent(rs.getString(11));				
+			}
+			
+			con.close();			
+		} catch (Exception e) {e.printStackTrace();}		
+		
+		return bean;
+	
+	}
+	
+	//update 와 delete 시 필요한 패스워드 값 리턴해줌
+	
+	public String getPass(int no) {
+		
+		String pass = "";
+		
+		getCon();
+		
+		try {
+			
+			String sql = "select password from board where no = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+			 pass = rs.getString(1);
+			}			
+		} catch (Exception e) {e.printStackTrace();}
+		
+		return pass;
+	}
+	
+	public void deleteBoard(int no) {
+		
+		getCon();
+		
+		try {
+			
+			String sql = "delete from board where no = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			
+			pstmt.executeUpdate();
+			
+			con.close();
+			
 			
 		} catch (Exception e) {e.printStackTrace();}
 	}

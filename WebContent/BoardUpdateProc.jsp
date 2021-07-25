@@ -16,11 +16,18 @@
 <%
 	BoardDAO bdao = new BoardDAO();
 
-	bdao.updateBoard(boardbean);
+	String pass = bdao.getPass(boardbean.getNo());
 	
-	response.sendRedirect("BoardInfo.jsp?no="+boardbean.getNo());
-
+	if(pass.equals(boardbean.getPassword())){
+		bdao.updateBoard(boardbean);
+		response.sendRedirect("BoardList.jsp");	
+	}else{
 %>
+	<script type="text/javascript">
+		alert("패스워드가 일치하지 않습니다.")
+		history.go(-1);
+	</script>		
+	<%}%>
 
 
 </body>

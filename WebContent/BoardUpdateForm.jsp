@@ -9,7 +9,7 @@
 
 	BoardDAO bdao = new BoardDAO();
 
-	BoardBean bean = bdao.getOneBoard(no);
+	BoardBean bean = bdao.getOneUpdateBoard(no);
 	
 %>
 
@@ -19,36 +19,29 @@
 	<form action="BoardUpdateProc.jsp" method="post">
 	<table width="600" border="1" bgcolor="skyblue">
 	 <tr height="40">
-	 	<td align="center" width="120"> 글번호</td>
-	 	<td align="center" width="180"><%=bean.getNo() %></td>
-	 	<td align="center" width="120">조회수 </td>
-	 	<td align="center" width="180"><%=bean.getReadcount() %></td>
- 	</tr>
- 	<tr height="40">
 	 	<td align="center" width="120"> 작성자</td>
 	 	<td align="center" width="180"><%=bean.getWriter() %></td>
-	 	<td align="center" width="120">작성일 </td>
+	 	<td align="center" width="120">작성일</td>
 	 	<td align="center" width="180"><%=bean.getDate() %></td>
  	</tr>
  	<tr height="40">
-	 	<td align="center" width="120"> 이메일</td>
-	 	<td align="center" colspan="3"><%=bean.getEmail() %></td>
- 	</tr>
- 	<tr height="40">
 	 	<td align="center" width="120">제목 </td>
-	 	<td align="center" colspan="3"><%=bean.getSubject() %></td>	 	
+	 	<td width="480" colspan="3"> &nbsp; <input type="text" name="subject" value="<%=bean.getSubject() %>" size="60"></td>	 	
  	</tr>
  	<tr height="40">
-	 	<td align="center" width="150"> 글내용 </td>
-			<td width="450"> <textarea rows="10" cols="50" name="content"></textarea></td>
+	 	<td align="center" width="120">패스워드 </td>
+	 	<td width="480" colspan="3"> &nbsp; <input type="password" name="password" size="60"></td>	 	
+ 	</tr> 	
+ 	<tr height="40">
+	 	<td align="center" width="120"> 글내용 </td>
+			<td width="480" colspan="3"> <textarea rows="10" cols="60" name="content" align="left"><%=bean.getContent() %></textarea></td>
  	</tr>
  	<tr height="40">
- 		<td align="center" colspan="4">
- 		<input type="submit" value="수정하기"/>
+ 		<td align="center" colspan="4"> 		
  		<input type="hidden" name="no" value="<%=bean.getNo()%>"/>
- 		</form>
- 		<input type="button" value="뒤로가기" onclick="history.go(-1)"/>
-	
+ 		<input type="submit" value="수정하기"/> &nbsp;&nbsp;
+ 		<input type="button" onclick="location.href='BoardList.jsp'" value="전체글보기">
+ 		</form>	
 	</table>
 	
 </center>
